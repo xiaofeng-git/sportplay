@@ -1,0 +1,15 @@
+#db2
+spring:
+  datasource:
+    driver-class-name: com.ibm.db2.jcc.DB2Driver
+    url: jdbc:db2://localhost:50000/sport
+    username: cis
+    password: db2admin123456
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.wyf.sport.model
+
+server:
+  address: 0.0.0.0
+  port: 9000

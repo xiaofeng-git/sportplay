@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wyf.sport.dao.UserDao">
+    <select id="getUserByMessage" resultType="com.wyf.sport.bean.User">
+        SELECT * FROM USER WHERE USERNAME = #{username} AND PASSWORD= #{password} AND STATE = '1'
+    </select>
+    <select id="getAllUser" resultType="com.wyf.sport.bean.User">
+        SELECT * FROM USER
+        <if test="username != null">
+            WHERE USERNAME like #{username}
+        </if>
+        LIMIT #{pageSize} OFFSET #{pageStart}
+    </select>
+    <select id="getUserCounts" resultType="java.lang.Integer">
+        SELECT count(*) FROM USER
+        <if test="username != null">
+            WHERE USERNAME like #{username}
+        </if>
+    </select>
+    <select id="getMaxUserId" resultType="java.lang.Integer">
+        SELECT max(ID) FROM USER
+    </select>
+    <update id="updateState">
+        UPDATE USER SET STATE = #{state} WHERE id= #{id}
+    </update>
+    <insert id="addUser">
+        INSERT INTO USER(ID,USERNAME,PASSWORD,EMAIL,ROLE,STATE)
+        VALUES (#{id},#{username},#{password},#{email},#{role},#{state})
+    </insert>
+    <delete id="deleteUser">
+        DELETE FROM USER WHERE id= #{id}
+    </delete>
+    <select id="getUpdateUser" resultType="com.wyf.sport.bean.User">
+        SELECT * FROM USER
+        <if test="id != null">
+            WHERE ID = #{id}
+        </if>
+    </select>
+    <update id="updateUser">
+        UPDATE USER
+        <set>
+            <if test="username != null">
+                USERNAME = #{username},
+            </if>
+            <if test="password != null">
+                PASSWORD = #{password},
+            </if>
+            <if test="email != null">
+                EMAIL = #{email},
+            </if>
+            <if test="role != null">
+                ROLE = #{role},
+            </if>
+            <if test="state != null">
+                STATE = #{state},
+            </if>
+        </set>
+            WHERE ID = #{id}
+    </update>
+</mapper>
